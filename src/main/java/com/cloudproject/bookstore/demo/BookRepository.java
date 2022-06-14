@@ -14,8 +14,7 @@ public class BookRepository {
     }
 
     public BookItem getBookById(Integer id) {
-        var optional = books.stream().filter(b -> b.getBookId().equals(id)).findFirst();
-        return optional.isPresent() ? optional.get() : null;
+        return books.stream().filter(b -> b.getBookId().equals(id)).findFirst().orElse(null);
     }
 
 }

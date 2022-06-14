@@ -4,19 +4,22 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    private List<BookItem> booksInCart;
+    private List<CartItem> booksInCart;
+
 
     public List<BookItem> getBooksInCart() {
-        return booksInCart;
+        return booksInCart.stream().map(b -> b.getBookInCart());
     }
 
     void addBookItem(BookItem newItem) {
+
         booksInCart.add(newItem);
     }
 
     void removeBookItem(BookItem bookItem) {
         booksInCart.remove(bookItem);
     }
+
 
 
 }

@@ -22,7 +22,10 @@ public class ShoppingCartController {
     public ShoppingCart addBookItem(Integer id) {
 
         BookItem bookItem = bookRepository.getBookById(id);
-        if (bookItem != null) {
+        if (bookItem != null && cart.getBooksInCart().contains(bookItem)){
+            cart.increaseQuantity(0);
+        }
+        else if (bookItem != null && !cart.getBooksInCart().contains(bookItem)) {
             cart.addBookItem(bookItem);
         }
         return cart;
@@ -32,7 +35,12 @@ public class ShoppingCartController {
     public ShoppingCart removeBookItem(Integer id) {
 
         BookItem bookItem = bookRepository.getBookById(id);
-        if (bookItem != null) {
+        if (bookItem == null || !cart.getBooksInCart().contains(bookItem)) {
+            throw new IllegalArgumentException("The book is not in the cart or doesn't exist");
+        }
+        else if (cart.getBooksInCart().size() > 1) {
+            cart.decreaseQuantity(cart.getBooksInCart().size());
+        } else if (cart.getBooksInCart().size() == 1) {
             cart.removeBookItem(bookItem);
         }
         return cart;
